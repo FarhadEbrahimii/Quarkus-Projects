@@ -1,4 +1,4 @@
-package ir.farhad;
+package ir.farhad.resources;
 
 import io.quarkus.test.junit.QuarkusIntegrationTest;
 

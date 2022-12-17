@@ -1,9 +1,11 @@
 package ir.farhad.resources;
 
 import io.quarkus.test.junit.QuarkusTest;
+import io.restassured.http.ContentType;
 import io.restassured.response.Response;
 import ir.farhad.model.entities.AccountEntity;
 import ir.farhad.model.enums.AccountStatus;
+import org.junit.jupiter.api.Order;
 import org.junit.jupiter.api.Test;
 
 import java.math.BigDecimal;
@@ -44,5 +46,39 @@ class AccountResourceTest {
         assertThat(accountEntity.getCustomerName(), equalTo("George Baird"));
         assertThat(accountEntity.getBalance(), equalTo(new BigDecimal("354.23")));
         assertThat(accountEntity.getAccountStatus(), equalTo(AccountStatus.OPEN));
+    }
+
+    @Test
+    @Order(3)
+    void testCreateAccount() {
+        AccountEntity newAccount = new AccountEntity(324324L, 112244L, "Sandy Holmes", new
+                BigDecimal("154.55"));
+        AccountEntity returnedAccount =
+                given()
+                        .contentType(ContentType.JSON)
+                        .body(newAccount)
+                        .when().post("/api/accounts")
+                        .then()
+                        .statusCode(201)
+                        .extract()
+                        .as(AccountEntity.class);
+        assertThat(returnedAccount, notNullValue());
+        assertThat(returnedAccount, equalTo(newAccount));
+        Response result =
+                given()
+                        .when().get("/api/accounts")
+                        .then()
+                        .statusCode(200)
+                        .body(
+                                containsString("George Baird"),
+                                containsString("Mary Taylor"),
+                                containsString("Diana Rigg"),
+                                containsString("Sandy Holmes")
+                        )
+                        .extract()
+                        .response();
+        List<AccountEntity> accounts = result.jsonPath().getList("$");
+        assertThat(accounts, not(empty()));
+        assertThat(accounts, hasSize(4));
     }
 }

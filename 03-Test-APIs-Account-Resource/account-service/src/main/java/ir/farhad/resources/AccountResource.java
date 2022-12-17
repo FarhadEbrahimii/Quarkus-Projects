@@ -5,6 +5,7 @@ import ir.farhad.model.entities.AccountEntity;
 import javax.annotation.PostConstruct;
 import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
+import javax.ws.rs.core.Response;
 import java.math.BigDecimal;
 import java.util.HashSet;
 import java.util.Optional;
@@ -36,5 +37,16 @@ public class AccountResource {
         Optional<AccountEntity> optionalAccount = accounts.stream().filter(item -> item.getAccountNumber().equals(accountNumber)).findFirst();
         return optionalAccount.orElseThrow(() -> new WebApplicationException("Account with id of " + accountNumber + " does not exist.", 404));
 //        return optionalAccount.orElseThrow(()-> new NotFoundException("Account with id of "+accountNumber+" does not exist."));
+    }
+
+    @POST
+    @Consumes(MediaType.APPLICATION_JSON)
+    @Produces(MediaType.APPLICATION_JSON)
+    public Response createAccount(AccountEntity account) {
+        if (account.getAccountNumber() == null) {
+            throw new WebApplicationException("No Account number specified.", 400);
+        }
+        accounts.add(account);
+        return Response.status(201).entity(account).build();
     }
 }

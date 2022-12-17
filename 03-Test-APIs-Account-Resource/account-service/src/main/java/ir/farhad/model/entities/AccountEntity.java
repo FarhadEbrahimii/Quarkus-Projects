@@ -72,4 +72,22 @@ public class AccountEntity {
     public void setAccountStatus(AccountStatus accountStatus) {
         this.accountStatus = accountStatus;
     }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        AccountEntity that = (AccountEntity) o;
+
+        if (!accountNumber.equals(that.accountNumber)) return false;
+        return customerNumber.equals(that.customerNumber);
+    }
+
+    @Override
+    public int hashCode() {
+        int result = accountNumber.hashCode();
+        result = 31 * result + customerNumber.hashCode();
+        return result;
+    }
 }
