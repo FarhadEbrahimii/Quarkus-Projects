@@ -39,9 +39,12 @@ nb-configuration.xml
 # Local environment
 .env
 /.mvn/wrapper/
-/First-Quarkus-Application/account-service/.mvn/
+/01-First-Quarkus-Application/account-service/.mvn/
 /.mvn/
-/First-Quarkus-Application/account-service/.dockerignore
-/First-Quarkus-Application/account-service/.gitignore
-/First-Quarkus-Application/account-service/mvnw
-/First-Quarkus-Application/account-service/mvnw.cmd
+/01-First-Quarkus-Application/account-service/.dockerignore
+/01-First-Quarkus-Application/account-service/.gitignore
+/01-First-Quarkus-Application/account-service/mvnw
+/01-First-Quarkus-Application/account-service/mvnw.cmd
+/01-First-Quarkus-Application/account-service/.gitignore
+/01-First-Quarkus-Application/account-service/mvnw
+/01-First-Quarkus-Application/account-service/mvnw.cmd
