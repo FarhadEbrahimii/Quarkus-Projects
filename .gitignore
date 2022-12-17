@@ -48,3 +48,7 @@ nb-configuration.xml
 /01-First-Quarkus-Application/account-service/.gitignore
 /01-First-Quarkus-Application/account-service/mvnw
 /01-First-Quarkus-Application/account-service/mvnw.cmd
+/02-Nicer-Response-Exception/account-service/.gitignore
+/02-Nicer-Response-Exception/account-service/mvnw
+/02-Nicer-Response-Exception/account-service/mvnw.cmd
+/02-Nicer-Response-Exception/account-service/.mvn/
