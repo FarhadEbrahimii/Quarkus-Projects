@@ -52,3 +52,7 @@ nb-configuration.xml
 /02-Nicer-Response-Exception/account-service/mvnw
 /02-Nicer-Response-Exception/account-service/mvnw.cmd
 /02-Nicer-Response-Exception/account-service/.mvn/
+/03-Test-APIs-Account-Resource/account-service/.gitignore
+/03-Test-APIs-Account-Resource/account-service/mvnw
+/03-Test-APIs-Account-Resource/account-service/mvnw.cmd
+/03-Test-APIs-Account-Resource/account-service/.mvn/
