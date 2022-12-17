@@ -3,12 +3,11 @@ package ir.farhad.resources;
 import ir.farhad.model.entities.AccountEntity;
 
 import javax.annotation.PostConstruct;
-import javax.ws.rs.GET;
-import javax.ws.rs.Path;
-import javax.ws.rs.Produces;
+import javax.ws.rs.*;
 import javax.ws.rs.core.MediaType;
 import java.math.BigDecimal;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @Path(value = "/api/accounts")
@@ -28,5 +27,13 @@ public class AccountResource {
     public Set<AccountEntity> getAllAccounts() {
         return accounts;
 //        return Collections.emptySet();
+    }
+
+    @GET
+    @Path(value = "/{accountNumber}")
+    @Produces(value = MediaType.APPLICATION_JSON)
+    public AccountEntity getAccount(@PathParam(value = "accountNumber") Long accountNumber){
+        Optional<AccountEntity> optionalAccount = accounts.stream().filter(item -> item.getAccountNumber().equals(accountNumber)).findFirst();
+        return optionalAccount.orElseThrow(()-> new NotFoundException("Account with id of "+accountNumber+" does not exist."));
     }
 }
