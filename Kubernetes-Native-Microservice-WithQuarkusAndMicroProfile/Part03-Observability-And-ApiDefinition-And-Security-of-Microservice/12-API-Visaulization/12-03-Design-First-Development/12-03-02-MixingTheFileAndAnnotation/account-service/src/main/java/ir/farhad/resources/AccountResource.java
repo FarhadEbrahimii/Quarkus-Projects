@@ -3,6 +3,7 @@ package ir.farhad.resources;
 import ir.farhad.model.entities.AccountEntity;
 import org.eclipse.microprofile.openapi.annotations.enums.ParameterIn;
 import org.eclipse.microprofile.openapi.annotations.parameters.Parameter;
+import org.eclipse.microprofile.openapi.annotations.tags.Tag;
 
 import javax.annotation.PostConstruct;
 import javax.ws.rs.*;
@@ -27,6 +28,7 @@ public class AccountResource {
 
     @GET
     @Produces(value = MediaType.APPLICATION_JSON)
+    @Tag(name = "all-accounts", description = "Separate grouping because we can")
     public Set<AccountEntity> getAllAccounts() {
         return accounts;
 //        return Collections.emptySet();
