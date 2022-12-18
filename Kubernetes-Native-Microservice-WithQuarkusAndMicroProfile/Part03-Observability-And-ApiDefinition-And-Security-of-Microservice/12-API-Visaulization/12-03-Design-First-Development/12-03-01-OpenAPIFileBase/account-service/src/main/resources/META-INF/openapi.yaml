@@ -1,0 +1,178 @@
+---
+openapi: 3.0.3
+info:
+  title: Account Service
+  description: "Service for maintaining accounts, their balances, and issuing deposit\
+    \ and withdrawal transactions"
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+  version: 34.0.0
+tags:
+- name: transactions
+  description: Operations manipulating account balances.
+- name: admin
+  description: Operations for managing accounts.
+paths:
+  /api/accounts:
+    get:
+      tags:
+      - transactions
+      - admin
+      description: Get all bank account.
+      operationId: getAllAccounts
+      responses:
+        "200":
+          description: Retrieved all Accounts
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AccountEntity'
+    post:
+      tags:
+      - transactions
+      - admin
+      description: Create a new bank account.
+      operationId: createAccount
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AccountEntity'
+      responses:
+        "201":
+          description: Successfully created a new account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountEntity'
+        "400":
+          description: No account number was specified on the Account.
+          content:
+            application/json:
+              schema:
+                required:
+                - exceptionType
+                - code
+                type: object
+                properties:
+                  exceptionType:
+                    type: string
+                    example: javax.ws.rs.WebApplicationException
+                  code:
+                    format: int32
+                    type: integer
+                    example: 400
+                  error:
+                    type: string
+                example: |-
+                  {
+                      exceptionType: javax.ws.rs.WebApplicationException,
+                      code: 400,
+                      error: No Account number specified.
+                  }
+  /api/accounts/{accountNumber}:
+    get:
+      tags:
+      - transactions
+      - admin
+      description: Get a bank account.
+      operationId: getAccount
+      parameters:
+      - name: accountNumber
+        in: path
+        required: true
+        schema:
+          format: int64
+          type: integer
+      responses:
+        "200":
+          description: Successfully retrieved an account.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AccountEntity'
+        "400":
+          description: "Account with id of {accountNumber} does not exist."
+          content:
+            application/json:
+              schema:
+                required:
+                - exceptionType
+                - code
+                type: object
+                properties:
+                  exceptionType:
+                    type: string
+                    example: javax.ws.rs.WebApplicationException
+                  code:
+                    format: int32
+                    type: integer
+                    example: 400
+                  error:
+                    type: string
+                example: |-
+                  {
+                      exceptionType: javax.ws.rs.WebApplicationException,
+                      code: 400,
+                      error: No Account number specified.
+                  }
+    parameters:
+    - name: accountNumber
+      in: path
+      description: Number of the Account to deposit into.
+      required: true
+      schema:
+        format: int64
+        type: integer
+  /api/hello:
+    get:
+      tags:
+      - Greeting Resource
+      operationId: hello
+      responses:
+        "200":
+          description: OK
+          content:
+            text/plain:
+              schema:
+                type: string
+components:
+  schemas:
+    AccountEntity:
+      description: POJO representing an account.
+      required:
+      - accountNumber
+      - customerNumber
+      - balance
+      - accountStatus
+      type: object
+      properties:
+        accountNumber:
+          format: int64
+          minLength: 8
+          type: integer
+          example: 123456789
+        customerNumber:
+          format: int64
+          minLength: 6
+          type: integer
+          example: 432542374
+        customerName:
+          type: string
+          example: Steve Hanger
+        balance:
+          type: number
+          example: 438.32
+        accountStatus:
+          allOf:
+          - $ref: '#/components/schemas/AccountStatus'
+          - example: OPEN
+    AccountStatus:
+      enum:
+      - OPEN
+      - CLOSED
+      - OVERDRAWN
+      type: string
