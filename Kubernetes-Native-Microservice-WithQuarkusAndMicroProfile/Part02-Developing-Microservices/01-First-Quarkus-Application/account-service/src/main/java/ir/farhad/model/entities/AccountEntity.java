@@ -12,8 +12,7 @@ public class AccountEntity {
     public AccountStatus accountStatus = AccountStatus.OPEN;
     public AccountEntity() {
     }
-    public AccountEntity(Long accountNumber, Long customerNumber, String
-            customerName, BigDecimal balance) {
+    public AccountEntity(Long accountNumber, Long customerNumber, String customerName, BigDecimal balance) {
         this.accountNumber = accountNumber;
         this.customerNumber = customerNumber;
         this.customerName = customerName;
